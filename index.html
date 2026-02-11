@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>국희재수학 봉선점 | 2026 시간표</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink:    #0f0f0f;
+  --paper:  #fafaf7;
+  --rule:   #e2e0d9;
+  --mid:    #9a9588;
+  --c-med:      #1a1a2e;
+  --c-algebra:  #0d3b6e;
+  --c-practice: #7a1f2e;
+  --c-nonsul:   #2d1a4a;
+  --c-clinic:   #0a3d2e;
+  --accent-med:      #e8e4ff;
+  --accent-algebra:  #d4eaff;
+  --accent-practice: #ffd4da;
+  --accent-nonsul:   #ead4ff;
+  --accent-clinic:   #ccf0e4;
+  --red: #d63031;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ─── MASTHEAD ─── */
+.masthead {
+  border-bottom: 3px solid var(--ink);
+  padding: 28px 48px 22px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: end;
+  gap: 20px;
+}
+.masthead-left {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72em;
+  color: var(--mid);
+  letter-spacing: 0.08em;
+  line-height: 1.6;
+}
+.masthead-center {
+  text-align: center;
+}
+.masthead-center .brand {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.8em, 4vw, 3em);
+  font-weight: 400;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  display: block;
+  margin-bottom: 4px;
+}
+.masthead-center .brand em {
+  font-style: italic;
+  color: var(--mid);
+}
+.masthead-center .edition {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68em;
+  letter-spacing: 0.15em;
+  color: var(--mid);
+  text-transform: uppercase;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 5px 0;
+  display: inline-block;
+  width: 100%;
+}
+.masthead-right {
+  text-align: right;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72em;
+  color: var(--mid);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+/* ─── TEACHER SELECTOR ─── */
+.teacher-strip {
+  display: flex;
+  border-bottom: 1px solid var(--rule);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.teacher-strip::-webkit-scrollbar { display: none; }
+
+.t-tab {
+  flex: 1;
+  min-width: 180px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-right: 1px solid var(--rule);
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+  position: relative;
+}
+.t-tab:last-child { border-right: none; }
+.t-tab:hover { background: rgba(0,0,0,0.025); }
+.t-tab.active { background: var(--ink); color: white; }
+.t-tab.active .t-sub { color: rgba(255,255,255,0.5); }
+.t-tab.active .t-num { color: rgba(255,255,255,0.2); }
+.t-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 2px;
+  background: var(--ink);
+}
+
+.t-avatar {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--rule);
+  object-fit: cover;
+  background: var(--rule);
+  flex-shrink: 0;
+  font-size: 0; /* hide alt text */
+}
+.t-tab.active .t-avatar { border-color: rgba(255,255,255,0.3); }
+
+.t-text {}
+.t-name {
+  font-size: 1em;
+  font-weight: 700;
+  display: block;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+.t-sub {
+  font-size: 0.74em;
+  color: var(--mid);
+  font-weight: 300;
+  display: block;
+  line-height: 1.3;
+}
+.t-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3em;
+  font-weight: 400;
+  color: var(--rule);
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  line-height: 1;
+  pointer-events: none;
+}
+.t-tab.active .t-num { color: rgba(255,255,255,0.08); }
+
+/* ─── MAIN BODY ─── */
+.page-body {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  min-height: calc(100vh - 180px);
+}
+
+/* ─── TIMETABLE COLUMN ─── */
+.tt-col {
+  border-right: 1px solid var(--rule);
+  padding: 36px 40px 60px;
+}
+.tt-col-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--rule);
+}
+.tt-col-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.8em;
+  font-weight: 400;
+}
+.tt-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72em;
+  color: var(--mid);
+  letter-spacing: 0.06em;
+}
+
+/* PC GRID timetable */
+.tt-grid {
+  display: grid;
+  grid-template-columns: 60px repeat(7, 1fr);
+  gap: 0;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  font-size: 0.82em;
+}
+.tt-grid-header {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78em;
+  letter-spacing: 0.1em;
+  padding: 10px 6px;
+  text-align: center;
+  font-weight: 400;
+}
+.tt-time-label {
+  background: rgba(0,0,0,0.03);
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75em;
+  color: var(--mid);
+  height: 52px;
+  font-weight: 500;
+}
+.tt-cell {
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid rgba(0,0,0,0.04);
+  height: 52px;
+  position: relative;
+}
+.tt-cell:last-child { border-right: none; }
+
+/* Class blocks */
+.tt-block {
+  position: absolute;
+  left: 3px; right: 3px;
+  border-radius: 3px;
+  padding: 5px 7px;
+  font-size: 0.78em;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.3;
+  transition: filter 0.15s, transform 0.15s;
+  border-left: 3px solid rgba(0,0,0,0.2);
+  overflow: hidden;
+}
+.tt-block:hover {
+  filter: brightness(0.93);
+  transform: scale(1.02);
+  z-index: 20;
+}
+.tt-block.active-block {
+  box-shadow: 0 0 0 2px var(--ink), 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 20;
+}
+.tt-block .b-title { font-size: 0.82em; font-weight: 800; }
+.tt-block .b-time  { font-size: 0.68em; opacity: 0.65; font-family: 'DM Mono', monospace; margin-top: 1px; }
+
+.badge-hot {
+  display: inline-block;
+  background: var(--red);
+  color: white;
+  font-size: 0.58em;
+  padding: 1px 5px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  margin-bottom: 2px;
+  width: fit-content;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+
+/* color schemes */
+.b-med      { background: var(--accent-med);      color: var(--c-med); }
+.b-algebra  { background: var(--accent-algebra);  color: var(--c-algebra); }
+.b-practice { background: var(--accent-practice); color: var(--c-practice); }
+.b-nonsul   { background: var(--accent-nonsul);   color: var(--c-nonsul); }
+.b-clinic   { background: var(--accent-clinic);   color: var(--c-clinic); }
+
+/* ─── MOBILE CARD LIST ─── */
+#mobile-cards {
+  display: none;
+}
+.m-card {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  transition: background 0.15s;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.m-card:last-child { border-bottom: none; }
+.m-card:hover { background: rgba(0,0,0,0.02); margin: 0 -8px; padding: 18px 8px; border-radius: 4px; }
+
+.m-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.m-title { font-size: 0.97em; font-weight: 700; margin-bottom: 4px; }
+.m-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.74em;
+  color: var(--mid);
+  line-height: 1.5;
+}
+
+/* ─── DETAIL PANEL ─── */
+.detail-panel {
+  padding: 36px 32px 60px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.detail-panel::-webkit-scrollbar { width: 3px; }
+.detail-panel::-webkit-scrollbar-thumb { background: var(--rule); }
+
+.panel-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68em;
+  letter-spacing: 0.2em;
+  color: var(--mid);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.panel-eyebrow::before {
+  content: '';
+  width: 20px; height: 1px;
+  background: var(--mid);
+}
+
+.panel-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--rule);
+  text-align: center;
+  gap: 16px;
+}
+.panel-empty-icon {
+  font-family: 'DM Serif Display', serif;
+  font-size: 6em;
+  line-height: 1;
+  color: var(--rule);
+}
+.panel-empty-text {
+  font-size: 0.88em;
+  color: var(--mid);
+  font-weight: 300;
+}
+
+.panel-content { display: none; flex-direction: column; gap: 28px; }
+.panel-content.show { display: flex; }
+
+.panel-category-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 2px;
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  width: fit-content;
+}
+.panel-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.9em;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.panel-divider {
+  width: 40px; height: 2px;
+  background: var(--ink);
+}
+.panel-desc {
+  font-size: 0.9em;
+  line-height: 1.85;
+  color: #333;
+  white-space: pre-wrap;
+}
+
+.panel-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.panel-info-cell {
+  background: var(--paper);
+  padding: 14px 16px;
+}
+.panel-info-cell .ic-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65em;
+  letter-spacing: 0.12em;
+  color: var(--mid);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.panel-info-cell .ic-value {
+  font-size: 0.88em;
+  font-weight: 600;
+}
+
+.panel-cta {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 14px 24px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 0.88em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  transition: opacity 0.2s;
+}
+.panel-cta:hover { opacity: 0.8; }
+
+/* ─── FOOTER ─── */
+.page-footer {
+  border-top: 3px solid var(--ink);
+  padding: 20px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72em;
+  color: var(--mid);
+  letter-spacing: 0.06em;
+}
+
+/* ─── MOBILE ─── */
+@media (max-width: 860px) {
+  .masthead {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 20px 20px 16px;
+    gap: 8px;
+  }
+  .masthead-left, .masthead-right { text-align: center; }
+
+  .t-tab { min-width: 120px; padding: 14px 16px; gap: 10px; }
+  .t-num { display: none; }
+  .t-avatar { width: 34px; height: 34px; }
+  .t-name { font-size: 0.88em; }
+
+  .page-body { grid-template-columns: 1fr; }
+
+  .tt-col { padding: 24px 16px 40px; border-right: none; }
+  .tt-grid { display: none; }
+  #mobile-cards { display: block; }
+
+  .detail-panel {
+    position: static;
+    height: auto;
+    border-top: 1px solid var(--rule);
+    padding: 28px 16px 40px;
+  }
+
+  .page-footer { flex-direction: column; gap: 6px; text-align: center; padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── MASTHEAD ─── -->
+<header class="masthead">
+  <div class="masthead-left">
+    국희재수학전문학원<br>봉선점
+  </div>
+  <div class="masthead-center">
+    <span class="brand">Kookhee<em>jae</em> Math</span>
+    <span class="edition">2026 Spring Semester · Class Schedule</span>
+  </div>
+  <div class="masthead-right">
+    광주광역시 봉선동<br>062-955-9360
+  </div>
+</header>
+
+<!-- ─── TEACHER TABS ─── -->
+<nav class="teacher-strip">
+  <div class="t-tab active" data-key="kuk" onclick="selectTeacher('kuk', this)">
+    <img src="teacher_kook.jpg" class="t-avatar" alt="국희재" onerror="this.style.background='#e2e0d9'">
+    <div class="t-text">
+      <span class="t-name">국희재 T</span>
+      <span class="t-sub">의치대·SKY 최상위권</span>
+    </div>
+    <span class="t-num">01</span>
+  </div>
+  <div class="t-tab" data-key="kim" onclick="selectTeacher('kim', this)">
+    <img src="teacher_kim.jpg" class="t-avatar" alt="김충현" onerror="this.style.background='#e2e0d9'">
+    <div class="t-text">
+      <span class="t-name">김충현 T</span>
+      <span class="t-sub">고등 내신 마스터</span>
+    </div>
+    <span class="t-num">02</span>
+  </div>
+  <div class="t-tab" data-key="baek" onclick="selectTeacher('baek', this)">
+    <img src="teacher_baek.jpg" class="t-avatar" alt="백윤성" onerror="this.style.background='#e2e0d9'">
+    <div class="t-text">
+      <span class="t-name">백윤성 T</span>
+      <span class="t-sub">수리논술 전문</span>
+    </div>
+    <span class="t-num">03</span>
+  </div>
+</nav>
+
+<!-- ─── BODY ─── -->
+<main class="page-body">
+
+  <!-- TIMETABLE -->
+  <section class="tt-col">
+    <div class="tt-col-header">
+      <span class="tt-col-title" id="tt-teacher-name">국희재 T</span>
+      <span class="tt-meta" id="tt-class-count">— 강좌 선택 —</span>
+    </div>
+
+    <!-- PC Grid -->
+    <div class="tt-grid" id="tt-grid"></div>
+
+    <!-- Mobile List -->
+    <div id="mobile-cards"></div>
+  </section>
+
+  <!-- DETAIL PANEL -->
+  <aside class="detail-panel">
+    <div class="panel-eyebrow">강좌 상세</div>
+
+    <div class="panel-empty" id="panel-empty">
+      <div class="panel-empty-icon">→</div>
+      <p class="panel-empty-text">수업 블록을 클릭하면<br>상세 정보를 확인할 수 있어요</p>
+    </div>
+
+    <div class="panel-content" id="panel-content">
+      <div class="panel-category-pill" id="p-pill"></div>
+      <div>
+        <div class="panel-title" id="p-title"></div>
+      </div>
+      <div class="panel-divider"></div>
+      <div class="panel-desc" id="p-desc"></div>
+      <div class="panel-info-grid" id="p-info"></div>
+      <a href="tel:062-955-9360" class="panel-cta">📞 수강 문의하기</a>
+    </div>
+  </aside>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer class="page-footer">
+  <span>© 2026 국희재수학전문학원 봉선점</span>
+  <span>MON – SUN · 09:00 – 22:00</span>
+  <span>062-955-9360</span>
+</footer>
+
+<script>
+/* ── DATA ── */
+const DAYS = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+const KOR  = ['월','화','수','목','금','토','일'];
+const HOURS = Array.from({length:15}, (_,i) => i+8); // 8~22
+
+const teacherMeta = {
+  kuk:  { name: '국희재 T',  label: '의치대·SKY 최상위권' },
+  kim:  { name: '김충현 T',  label: '고등 내신 마스터' },
+  baek: { name: '백윤성 T',  label: '수리논술 전문' },
+};
+
+const DATA = {
+  kuk: [
+    {
+      id:'k1', name:'공통수학1 (의치대반)', days:[6,7], start:9, span:2, color:'b-med',
+      dotColor:'#6b5ce7', badge:'심화 MASTER',
+      category:'최상위권 전문', categoryColor:'#e8e4ff', categoryText:'#3a2a8a',
+      time:'토·일 09:00–11:00',
+      desc:'■ 토/일 오전 9시~11시\n■ 최상위 의치대 목표 전용 플래티넘 커리큘럼\n■ 심화 개념 분석 및 실전 문제 대비\n■ 개별 피드백 시스템 운영',
+      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'09:00 – 11:00'},{l:'레벨', v:'최상위 심화'},{l:'정원', v:'소수 정예'}]
+    },
+    {
+      id:'k2', name:'대수 (중2/중3)', days:[1,3,5], start:19, span:3, color:'b-algebra',
+      dotColor:'#0d3b6e', badge:'심화 MASTER',
+      category:'중등 심화', categoryColor:'#d4eaff', categoryText:'#0d3b6e',
+      time:'월·수·금 19:00–22:00',
+      desc:'■ 월/수/금 오후 7시~10시\n■ 3월 4일 대개강\n■ 압도적 깊이의 심화 이론 분석\n■ 수학 최상위권 도달을 목표로 하는 집중 수업',
+      info: [{l:'요일', v:'월·수·금'},{l:'시간', v:'19:00 – 22:00'},{l:'개강', v:'3월 4일'},{l:'정원', v:'소수 정예'}]
+    }
+  ],
+  kim: [
+    {
+      id:'m1', name:'대수 집중반', days:[6,7], start:10, span:3, color:'b-practice',
+      dotColor:'#7a1f2e', badge:null,
+      category:'내신 집중', categoryColor:'#ffd4da', categoryText:'#7a1f2e',
+      time:'토·일 10:00–13:00',
+      desc:'■ 토/일 오전 10시~1시\n■ 대수 핵심 개념 완벽 정리 및 기출 훈련\n■ 내신 최고점 달성을 위한 체계적 커리큘럼',
+      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'10:00 – 13:00'},{l:'과목', v:'대수'},{l:'유형', v:'내신 집중'}]
+    },
+    {
+      id:'m2', name:'공통수학1 집중반', days:[6,7], start:13, span:3, color:'b-clinic',
+      dotColor:'#0a3d2e', badge:null,
+      category:'내신 집중', categoryColor:'#ccf0e4', categoryText:'#0a3d2e',
+      time:'토·일 13:00–16:00',
+      desc:'■ 토/일 오후 1시~4시\n■ 공통수학1 필수 유형 집중 보강\n■ 실수 방지 트레이닝 및 오답 분석 시스템',
+      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'13:00 – 16:00'},{l:'과목', v:'공통수학1'},{l:'유형', v:'내신 집중'}]
+    }
+  ],
+  baek: [
+    {
+      id:'b1', name:'수리논술 정규반', days:[3], start:19, span:3, color:'b-nonsul',
+      dotColor:'#5b2d8a', badge:'논술 전형',
+      category:'수리논술', categoryColor:'#ead4ff', categoryText:'#5b2d8a',
+      time:'수 19:00–22:00',
+      desc:'■ 수요일 저녁 7시~10시 (수완점)\n■ 주요 대학 기출 분석 및 대면 첨삭 지도\n■ 연세대 의과대학 수리논술 2회 합격 강사의 직접 지도\n■ Google Meet 비대면 1:1 화상 첨삭 병행',
+      info: [{l:'요일', v:'수요일'},{l:'시간', v:'19:00 – 22:00'},{l:'장소', v:'수완점'},{l:'첨삭', v:'1:1 화상'}]
+    },
+    {
+      id:'b2', name:'기하 / 확통', days:[6,7], start:14, span:2, color:'b-algebra',
+      dotColor:'#0d3b6e', badge:null,
+      category:'선택과목', categoryColor:'#d4eaff', categoryText:'#0d3b6e',
+      time:'토·일 14:00–16:00',
+      desc:'■ 토/일 오후 2시~4시\n■ 선택과목 전략적 실전 개념 완성\n■ 기하·확률과 통계 병행 운영',
+      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'14:00 – 16:00'},{l:'과목', v:'기하 / 확통'},{l:'유형', v:'실전 개념'}]
+    },
+    {
+      id:'b3', name:'1:1 소수정예 클리닉', days:[6,7], start:10, span:3, color:'b-clinic',
+      dotColor:'#0a3d2e', badge:'개별 진도',
+      category:'클리닉', categoryColor:'#ccf0e4', categoryText:'#0a3d2e',
+      time:'토·일 10:00–13:00',
+      desc:'■ 오전 10시~1시 / 오후 4시~7시\n■ 개별 맞춤 진도 및 밀착 질의응답\n■ 학생 수준에 완전 맞춤화된 1:1 프로그램',
+      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'10:00–13:00 / 16:00–19:00'},{l:'형태', v:'1:1 개별'},{l:'정원', v:'1인'}]
+    },
+    {
+      id:'b4', name:'1:1 소수정예 클리닉', days:[6,7], start:16, span:3, color:'b-clinic',
+      dotColor:'#0a3d2e', badge:'개별 진도',
+      category:'클리닉', categoryColor:'#ccf0e4', categoryText:'#0a3d2e',
+      time:'토·일 16:00–19:00',
+      desc:'■ 오후 4시~7시\n■ 개별 맞춤 진도 및 밀착 질의응답\n■ 학생 수준에 완전 맞춤화된 1:1 프로그램',
+      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'16:00 – 19:00'},{l:'형태', v:'1:1 개별'},{l:'정원', v:'1인'}]
+    }
+  ]
+};
+
+/* ── STATE ── */
+let currentTeacher = 'kuk';
+let activeBlock = null;
+
+/* ── HELPERS ── */
+function hourToRow(h) { return h - 8; } // 0-indexed from 8:00
+
+/* ── BUILD GRID ── */
+function buildGrid(key) {
+  const grid = document.getElementById('tt-grid');
+  grid.innerHTML = '';
+
+  // Header row
+  grid.appendChild(makeEl('div', 'tt-grid-header', ''));
+  DAYS.forEach(d => {
+    const h = makeEl('div', 'tt-grid-header', d);
+    grid.appendChild(h);
+  });
+
+  // Body: 15 hours × 8 cols
+  const cells = []; // cells[row][col] => dom el
+  for(let r=0; r<15; r++){
+    const row = [];
+    // time label
+    const tl = makeEl('div','tt-time-label', HOURS[r]+':00');
+    grid.appendChild(tl);
+    for(let c=0; c<7; c++){
+      const cell = makeEl('div','tt-cell','');
+      cell.dataset.row = r;
+      cell.dataset.col = c;
+      grid.appendChild(cell);
+      row.push(cell);
+    }
+    cells.push(row);
+  }
+
+  // Place blocks
+  const classes = DATA[key];
+  // Track which (col, row) are occupied for stacking
+  const occupied = {};
+
+  classes.forEach(cls => {
+    cls.days.forEach(d => {
+      const colIdx = d-1; // 0-indexed
+      const rowIdx = hourToRow(cls.start);
+      const anchor = cells[rowIdx][colIdx];
+      if(!anchor) return;
+
+      const block = document.createElement('div');
+      block.className = 'tt-block ' + cls.color;
+      block.dataset.id = cls.id;
+
+      // Height: span rows * cell-height
+      const cellH = 52;
+      block.style.height = (cls.span * cellH - 6) + 'px';
+      block.style.top = '3px';
+
+      let inner = '';
+      if(cls.badge) inner += `<span class="badge-hot">${cls.badge}</span>`;
+      inner += `<span class="b-title">${cls.name}</span>`;
+      inner += `<span class="b-time">${cls.start}:00–${cls.start+cls.span}:00</span>`;
+      block.innerHTML = inner;
+
+      block.addEventListener('click', () => showDetail(cls, block));
+      anchor.appendChild(block);
+    });
+  });
+}
+
+/* ── BUILD MOBILE ── */
+function buildMobile(key) {
+  const container = document.getElementById('mobile-cards');
+  container.innerHTML = '';
+  const classes = DATA[key];
+  // Deduplicate by id
+  const seen = new Set();
+  classes.forEach(cls => {
+    if(seen.has(cls.id)) return;
+    seen.add(cls.id);
+
+    const card = document.createElement('div');
+    card.className = 'm-card';
+    card.innerHTML = `
+      <div class="m-dot" style="background:${cls.dotColor}; margin-top:6px;"></div>
+      <div>
+        <div class="m-title">${cls.name}${cls.badge ? ` <span class="badge-hot" style="vertical-align:middle">${cls.badge}</span>` : ''}</div>
+        <div class="m-meta">${cls.time}</div>
+      </div>
+    `;
+    card.addEventListener('click', () => showDetail(cls, null));
+    container.appendChild(card);
+  });
+}
+
+/* ── SHOW DETAIL ── */
+function showDetail(cls, blockEl) {
+  // Clear previous active
+  document.querySelectorAll('.tt-block.active-block').forEach(b => b.classList.remove('active-block'));
+  if(blockEl) blockEl.classList.add('active-block');
+  activeBlock = blockEl;
+
+  document.getElementById('panel-empty').style.display = 'none';
+  const content = document.getElementById('panel-content');
+  content.classList.add('show');
+
+  // Pill
+  const pill = document.getElementById('p-pill');
+  pill.textContent = cls.category;
+  pill.style.background = cls.categoryColor;
+  pill.style.color = cls.categoryText;
+
+  document.getElementById('p-title').textContent = cls.name;
+  document.getElementById('p-desc').textContent = cls.desc;
+
+  // Info grid
+  const grid = document.getElementById('p-info');
+  grid.innerHTML = cls.info.map(({l,v}) => `
+    <div class="panel-info-cell">
+      <div class="ic-label">${l}</div>
+      <div class="ic-value">${v}</div>
+    </div>
+  `).join('');
+
+  // Scroll to panel on mobile
+  if(window.innerWidth <= 860) {
+    document.querySelector('.detail-panel').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+}
+
+/* ── SELECT TEACHER ── */
+function selectTeacher(key, el) {
+  currentTeacher = key;
+
+  // Tab UI
+  document.querySelectorAll('.t-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+
+  // Name + count
+  const meta = teacherMeta[key];
+  document.getElementById('tt-teacher-name').textContent = meta.name;
+  const cnt = [...new Set(DATA[key].map(c=>c.id))].length;
+  document.getElementById('tt-class-count').textContent = `총 ${cnt}개 강좌`;
+
+  // Rebuild
+  buildGrid(key);
+  buildMobile(key);
+
+  // Reset detail panel
+  document.getElementById('panel-empty').style.display = 'flex';
+  document.getElementById('panel-content').classList.remove('show');
+}
+
+/* ── UTIL ── */
+function makeEl(tag, cls, text) {
+  const el = document.createElement(tag);
+  el.className = cls;
+  el.textContent = text;
+  return el;
+}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  selectTeacher('kuk', document.querySelector('.t-tab[data-key="kuk"]'));
+});
+</script>
+</body>
+</html>
