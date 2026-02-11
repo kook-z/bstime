@@ -7,24 +7,35 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
 :root {
-  --ink:    #0f0f0f;
-  --paper:  #fafaf7;
-  --rule:   #e2e0d9;
-  --mid:    #9a9588;
-  --c-med:      #1a1a2e;
-  --c-algebra:  #0d3b6e;
-  --c-practice: #7a1f2e;
-  --c-nonsul:   #2d1a4a;
-  --c-clinic:   #0a3d2e;
-  --accent-med:      #e8e4ff;
-  --accent-algebra:  #d4eaff;
-  --accent-practice: #ffd4da;
-  --accent-nonsul:   #ead4ff;
-  --accent-clinic:   #ccf0e4;
+  --ink:      #0f0f0f;
+  --paper:    #fafaf7;
+  --surface:  #ffffff;
+  --rule:     #e2e0d9;
+  --rule-dark:#c8c4bb;
+  --mid:      #9a9588;
+  --dim:      #c5c2ba;
+
+  --c-med:        #1a1a2e;
+  --c-algebra:    #0d3b6e;
+  --c-practice:   #7a1f2e;
+  --c-nonsul:     #2d1a4a;
+  --c-clinic:     #0a3d2e;
+  --accent-med:       #e8e4ff;
+  --accent-algebra:   #d4eaff;
+  --accent-practice:  #ffd4da;
+  --accent-nonsul:    #ead4ff;
+  --accent-clinic:    #ccf0e4;
+
+  --dot-med:      #6b5ce7;
+  --dot-algebra:  #1a6bbf;
+  --dot-practice: #c0392b;
+  --dot-nonsul:   #8e44ad;
+  --dot-clinic:   #16a085;
+
   --red: #d63031;
 }
 
@@ -35,7 +46,9 @@ body {
   overflow-x: hidden;
 }
 
-/* ─── MASTHEAD ─── */
+/* ════════════════════════════════
+   PC MASTHEAD
+════════════════════════════════ */
 .masthead {
   border-bottom: 3px solid var(--ink);
   padding: 28px 48px 22px;
@@ -51,9 +64,7 @@ body {
   letter-spacing: 0.08em;
   line-height: 1.6;
 }
-.masthead-center {
-  text-align: center;
-}
+.masthead-center { text-align: center; }
 .masthead-center .brand {
   font-family: 'DM Serif Display', serif;
   font-size: clamp(1.8em, 4vw, 3em);
@@ -63,10 +74,7 @@ body {
   display: block;
   margin-bottom: 4px;
 }
-.masthead-center .brand em {
-  font-style: italic;
-  color: var(--mid);
-}
+.masthead-center .brand em { font-style: italic; color: var(--mid); }
 .masthead-center .edition {
   font-family: 'DM Mono', monospace;
   font-size: 0.68em;
@@ -88,7 +96,9 @@ body {
   line-height: 1.6;
 }
 
-/* ─── TEACHER SELECTOR ─── */
+/* ════════════════════════════════
+   PC TEACHER STRIP
+════════════════════════════════ */
 .teacher-strip {
   display: flex;
   border-bottom: 1px solid var(--rule);
@@ -97,7 +107,6 @@ body {
   scrollbar-width: none;
 }
 .teacher-strip::-webkit-scrollbar { display: none; }
-
 .t-tab {
   flex: 1;
   min-width: 180px;
@@ -115,7 +124,7 @@ body {
 .t-tab:hover { background: rgba(0,0,0,0.025); }
 .t-tab.active { background: var(--ink); color: white; }
 .t-tab.active .t-sub { color: rgba(255,255,255,0.5); }
-.t-tab.active .t-num { color: rgba(255,255,255,0.2); }
+.t-tab.active .t-num { color: rgba(255,255,255,0.08); }
 .t-tab.active::after {
   content: '';
   position: absolute;
@@ -123,7 +132,6 @@ body {
   height: 2px;
   background: var(--ink);
 }
-
 .t-avatar {
   width: 44px; height: 44px;
   border-radius: 50%;
@@ -131,47 +139,27 @@ body {
   object-fit: cover;
   background: var(--rule);
   flex-shrink: 0;
-  font-size: 0; /* hide alt text */
 }
 .t-tab.active .t-avatar { border-color: rgba(255,255,255,0.3); }
-
-.t-text {}
-.t-name {
-  font-size: 1em;
-  font-weight: 700;
-  display: block;
-  line-height: 1.2;
-  margin-bottom: 2px;
-}
-.t-sub {
-  font-size: 0.74em;
-  color: var(--mid);
-  font-weight: 300;
-  display: block;
-  line-height: 1.3;
-}
-.t-num {
+.t-name { font-size: 1em; font-weight: 700; display: block; line-height: 1.2; margin-bottom: 2px; }
+.t-sub  { font-size: 0.74em; color: var(--mid); font-weight: 300; display: block; line-height: 1.3; }
+.t-num  {
   font-family: 'DM Serif Display', serif;
-  font-size: 3em;
-  font-weight: 400;
+  font-size: 3em; font-weight: 400;
   color: var(--rule);
-  position: absolute;
-  right: 20px;
-  top: 50%;
+  position: absolute; right: 20px; top: 50%;
   transform: translateY(-50%);
-  line-height: 1;
-  pointer-events: none;
+  line-height: 1; pointer-events: none;
 }
-.t-tab.active .t-num { color: rgba(255,255,255,0.08); }
 
-/* ─── MAIN BODY ─── */
+/* ════════════════════════════════
+   PC LAYOUT
+════════════════════════════════ */
 .page-body {
   display: grid;
   grid-template-columns: 1fr 340px;
   min-height: calc(100vh - 180px);
 }
-
-/* ─── TIMETABLE COLUMN ─── */
 .tt-col {
   border-right: 1px solid var(--rule);
   padding: 36px 40px 60px;
@@ -196,7 +184,7 @@ body {
   letter-spacing: 0.06em;
 }
 
-/* PC GRID timetable */
+/* PC GRID */
 .tt-grid {
   display: grid;
   grid-template-columns: 60px repeat(7, 1fr);
@@ -207,311 +195,569 @@ body {
   font-size: 0.82em;
 }
 .tt-grid-header {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--ink); color: var(--paper);
   font-family: 'DM Mono', monospace;
-  font-size: 0.78em;
-  letter-spacing: 0.1em;
-  padding: 10px 6px;
-  text-align: center;
-  font-weight: 400;
+  font-size: 0.78em; letter-spacing: 0.1em;
+  padding: 10px 6px; text-align: center; font-weight: 400;
 }
 .tt-time-label {
   background: rgba(0,0,0,0.03);
   border-bottom: 1px solid var(--rule);
   border-right: 1px solid var(--rule);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   font-family: 'DM Mono', monospace;
-  font-size: 0.75em;
-  color: var(--mid);
-  height: 52px;
-  font-weight: 500;
+  font-size: 0.75em; color: var(--mid);
+  height: 52px; font-weight: 500;
 }
 .tt-cell {
   border-bottom: 1px solid var(--rule);
   border-right: 1px solid rgba(0,0,0,0.04);
-  height: 52px;
-  position: relative;
+  height: 52px; position: relative;
 }
 .tt-cell:last-child { border-right: none; }
-
-/* Class blocks */
 .tt-block {
-  position: absolute;
-  left: 3px; right: 3px;
-  border-radius: 3px;
-  padding: 5px 7px;
-  font-size: 0.78em;
-  font-weight: 700;
-  cursor: pointer;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  position: absolute; left: 3px; right: 3px;
+  border-radius: 3px; padding: 5px 7px;
+  font-size: 0.78em; font-weight: 700;
+  cursor: pointer; z-index: 5;
+  display: flex; flex-direction: column; justify-content: center;
   line-height: 1.3;
   transition: filter 0.15s, transform 0.15s;
   border-left: 3px solid rgba(0,0,0,0.2);
   overflow: hidden;
 }
-.tt-block:hover {
-  filter: brightness(0.93);
-  transform: scale(1.02);
-  z-index: 20;
-}
-.tt-block.active-block {
-  box-shadow: 0 0 0 2px var(--ink), 0 4px 12px rgba(0,0,0,0.15);
-  z-index: 20;
-}
+.tt-block:hover { filter: brightness(0.93); transform: scale(1.02); z-index: 20; }
+.tt-block.active-block { box-shadow: 0 0 0 2px var(--ink), 0 4px 12px rgba(0,0,0,0.15); z-index: 20; }
 .tt-block .b-title { font-size: 0.82em; font-weight: 800; }
 .tt-block .b-time  { font-size: 0.68em; opacity: 0.65; font-family: 'DM Mono', monospace; margin-top: 1px; }
 
 .badge-hot {
   display: inline-block;
-  background: var(--red);
-  color: white;
-  font-size: 0.58em;
-  padding: 1px 5px;
-  border-radius: 2px;
-  letter-spacing: 0.05em;
-  font-weight: 700;
-  margin-bottom: 2px;
+  background: var(--red); color: white;
+  font-size: 0.58em; padding: 1px 5px; border-radius: 2px;
+  letter-spacing: 0.05em; font-weight: 700; margin-bottom: 2px;
   width: fit-content;
   animation: pulse 1.4s ease-in-out infinite;
 }
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.55; }
-}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.55} }
 
-/* color schemes */
-.b-med      { background: var(--accent-med);      color: var(--c-med); }
-.b-algebra  { background: var(--accent-algebra);  color: var(--c-algebra); }
-.b-practice { background: var(--accent-practice); color: var(--c-practice); }
-.b-nonsul   { background: var(--accent-nonsul);   color: var(--c-nonsul); }
-.b-clinic   { background: var(--accent-clinic);   color: var(--c-clinic); }
+.b-med      { background:var(--accent-med);      color:var(--c-med); }
+.b-algebra  { background:var(--accent-algebra);  color:var(--c-algebra); }
+.b-practice { background:var(--accent-practice); color:var(--c-practice); }
+.b-nonsul   { background:var(--accent-nonsul);   color:var(--c-nonsul); }
+.b-clinic   { background:var(--accent-clinic);   color:var(--c-clinic); }
 
-/* ─── MOBILE CARD LIST ─── */
-#mobile-cards {
-  display: none;
-}
-.m-card {
-  padding: 18px 0;
-  border-bottom: 1px solid var(--rule);
-  cursor: pointer;
-  transition: background 0.15s;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 16px;
-  align-items: start;
-}
-.m-card:last-child { border-bottom: none; }
-.m-card:hover { background: rgba(0,0,0,0.02); margin: 0 -8px; padding: 18px 8px; border-radius: 4px; }
-
-.m-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  margin-top: 5px;
-  flex-shrink: 0;
-}
-.m-title { font-size: 0.97em; font-weight: 700; margin-bottom: 4px; }
-.m-meta {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.74em;
-  color: var(--mid);
-  line-height: 1.5;
-}
-
-/* ─── DETAIL PANEL ─── */
+/* PC DETAIL PANEL */
 .detail-panel {
   padding: 36px 32px 60px;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+  position: sticky; top: 0;
+  height: 100vh; overflow-y: auto;
+  display: flex; flex-direction: column;
 }
 .detail-panel::-webkit-scrollbar { width: 3px; }
 .detail-panel::-webkit-scrollbar-thumb { background: var(--rule); }
-
 .panel-eyebrow {
   font-family: 'DM Mono', monospace;
-  font-size: 0.68em;
-  letter-spacing: 0.2em;
-  color: var(--mid);
-  text-transform: uppercase;
+  font-size: 0.68em; letter-spacing: 0.2em;
+  color: var(--mid); text-transform: uppercase;
   margin-bottom: 32px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: flex; align-items: center; gap: 8px;
 }
-.panel-eyebrow::before {
-  content: '';
-  width: 20px; height: 1px;
-  background: var(--mid);
-}
-
+.panel-eyebrow::before { content:''; width:20px; height:1px; background:var(--mid); }
 .panel-empty {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: var(--rule);
-  text-align: center;
-  gap: 16px;
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  color: var(--rule); text-align: center; gap: 16px;
 }
 .panel-empty-icon {
   font-family: 'DM Serif Display', serif;
-  font-size: 6em;
-  line-height: 1;
-  color: var(--rule);
+  font-size: 6em; line-height: 1; color: var(--rule);
 }
-.panel-empty-text {
-  font-size: 0.88em;
-  color: var(--mid);
-  font-weight: 300;
-}
-
+.panel-empty-text { font-size: 0.88em; color: var(--mid); font-weight: 300; }
 .panel-content { display: none; flex-direction: column; gap: 28px; }
 .panel-content.show { display: flex; }
-
 .panel-category-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  border-radius: 2px;
-  font-size: 0.75em;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  width: fit-content;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 2px;
+  font-size: 0.75em; font-weight: 700;
+  letter-spacing: 0.04em; width: fit-content;
 }
 .panel-title {
   font-family: 'DM Serif Display', serif;
-  font-size: 1.9em;
-  font-weight: 400;
-  line-height: 1.2;
+  font-size: 1.9em; font-weight: 400; line-height: 1.2;
 }
-.panel-divider {
-  width: 40px; height: 2px;
-  background: var(--ink);
-}
-.panel-desc {
-  font-size: 0.9em;
-  line-height: 1.85;
-  color: #333;
-  white-space: pre-wrap;
-}
-
+.panel-divider { width: 40px; height: 2px; background: var(--ink); }
+.panel-desc { font-size: 0.9em; line-height: 1.85; color: #333; white-space: pre-wrap; }
 .panel-info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  border-radius: 3px;
-  overflow: hidden;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--rule);
+  border: 1px solid var(--rule); border-radius: 3px; overflow: hidden;
 }
-.panel-info-cell {
-  background: var(--paper);
-  padding: 14px 16px;
-}
+.panel-info-cell { background: var(--paper); padding: 14px 16px; }
 .panel-info-cell .ic-label {
   font-family: 'DM Mono', monospace;
-  font-size: 0.65em;
-  letter-spacing: 0.12em;
-  color: var(--mid);
-  text-transform: uppercase;
-  margin-bottom: 5px;
+  font-size: 0.65em; letter-spacing: 0.12em;
+  color: var(--mid); text-transform: uppercase; margin-bottom: 5px;
 }
-.panel-info-cell .ic-value {
-  font-size: 0.88em;
-  font-weight: 600;
-}
-
+.panel-info-cell .ic-value { font-size: 0.88em; font-weight: 600; }
 .panel-cta {
-  background: var(--ink);
-  color: var(--paper);
-  border: none;
-  padding: 14px 24px;
+  background: var(--ink); color: var(--paper);
+  border: none; padding: 14px 24px;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 0.88em;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  border-radius: 3px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  display: block;
+  font-size: 0.88em; font-weight: 700;
+  letter-spacing: 0.06em; border-radius: 3px;
+  cursor: pointer; text-align: center;
+  text-decoration: none; display: block;
   transition: opacity 0.2s;
 }
 .panel-cta:hover { opacity: 0.8; }
 
-/* ─── FOOTER ─── */
+/* PC FOOTER */
 .page-footer {
   border-top: 3px solid var(--ink);
   padding: 20px 48px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex; justify-content: space-between; align-items: center;
   font-family: 'DM Mono', monospace;
-  font-size: 0.72em;
-  color: var(--mid);
-  letter-spacing: 0.06em;
+  font-size: 0.72em; color: var(--mid); letter-spacing: 0.06em;
 }
 
-/* ─── MOBILE ─── */
+/* Mobile hidden by default */
+#mobile-cards { display: none; }
+.mobile-header { display: none; }
+.mobile-fab    { display: none; }
+
+
+/* ════════════════════════════════
+   MOBILE
+════════════════════════════════ */
 @media (max-width: 860px) {
-  .masthead {
-    grid-template-columns: 1fr;
+
+  /* ── HIDE PC ELEMENTS ── */
+  .masthead        { display: none; }
+  .teacher-strip   { display: none; }
+  .page-body       { display: block; }
+  .tt-col          { padding: 0; border-right: none; }
+  .tt-col-header   { display: none; }
+  .tt-grid         { display: none; }
+  .detail-panel    { display: none; }
+  .page-footer     { display: none; }
+
+  /* ── MOBILE HEADER ── */
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 60px;
+    background: var(--ink);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 300;
+  }
+  .mh-brand {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25em;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+  .mh-brand em { font-style: italic; opacity: 0.55; }
+  .mh-call {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: white;
+    color: var(--ink);
+    padding: 8px 14px;
+    border-radius: 3px;
+    font-size: 0.78em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .mh-call:hover { opacity: 0.85; }
+
+  /* ── TEACHER CAROUSEL ── */
+  .mobile-teacher-wrap {
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule);
+    padding: 16px 20px;
+  }
+  .mtw-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 12px;
+  }
+  .mobile-teacher-tabs {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+  .mobile-teacher-tabs::-webkit-scrollbar { display: none; }
+
+  .mt-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--rule);
+    border-radius: 40px;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: border-color 0.2s, background 0.2s;
+    background: var(--paper);
+  }
+  .mt-pill.active {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: white;
+  }
+  .mt-avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--rule);
+    border: 1px solid rgba(255,255,255,0.2);
+    flex-shrink: 0;
+  }
+  .mt-pill-name {
+    font-size: 0.88em;
+    font-weight: 700;
+  }
+  .mt-pill-sub {
+    font-size: 0.72em;
+    color: var(--mid);
+    font-weight: 300;
+  }
+  .mt-pill.active .mt-pill-sub { color: rgba(255,255,255,0.55); }
+
+  /* ── SECTION LABEL ── */
+  .mobile-section-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px 12px;
+  }
+  .msl-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.35em;
+    font-weight: 400;
+  }
+  .msl-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68em;
+    color: var(--dim);
+    letter-spacing: 0.1em;
+    background: var(--rule);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── MOBILE CLASS CARDS ── */
+  #mobile-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0 16px 120px;
+  }
+
+  .m-card {
+    background: var(--surface);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: block; /* override old grid */
+  }
+  .m-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+  }
+  .m-card.active {
+    border-color: var(--ink);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  }
+
+  /* Color stripe at top */
+  .m-card-stripe {
+    height: 4px;
+    width: 100%;
+  }
+
+  .m-card-body {
+    padding: 16px 18px 18px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: start;
+  }
+
+  .m-card-left {}
+  .m-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .m-category-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62em;
+    letter-spacing: 0.1em;
+    color: var(--mid);
+    text-transform: uppercase;
+  }
+  .m-badge-pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6em;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  .m-title {
+    font-size: 1em;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .m-time-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .m-time-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72em;
+    color: var(--mid);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 3px 9px;
+    border-radius: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  .m-card-arrow {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8em;
+    color: var(--mid);
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .m-card:hover .m-card-arrow,
+  .m-card.active .m-card-arrow {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: white;
+  }
+
+  /* ── BOTTOM SHEET (강좌 상세) ── */
+  .mobile-sheet-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 400;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .mobile-sheet-backdrop.open { opacity: 1; pointer-events: all; }
+
+  .mobile-sheet {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--surface);
+    border-radius: 20px 20px 0 0;
+    z-index: 500;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    max-height: 85vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mobile-sheet::-webkit-scrollbar { display: none; }
+  .mobile-sheet.open { transform: translateY(0); }
+
+  .sheet-handle-row {
+    display: flex;
+    justify-content: center;
+    padding: 14px 0 6px;
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    z-index: 2;
+  }
+  .sheet-handle {
+    width: 36px; height: 4px;
+    background: var(--rule);
+    border-radius: 2px;
+  }
+
+  .sheet-inner {
+    padding: 4px 24px 48px;
+  }
+
+  .sheet-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 2px;
+    font-size: 0.72em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 12px;
+  }
+  .sheet-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.7em;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+  .sheet-divider {
+    width: 32px; height: 2px;
+    background: var(--ink);
+    margin-bottom: 18px;
+  }
+  .sheet-desc {
+    font-size: 0.88em;
+    line-height: 1.85;
+    color: #444;
+    white-space: pre-wrap;
+    margin-bottom: 20px;
+  }
+  .sheet-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .sheet-info-cell {
+    background: var(--paper);
+    padding: 13px 14px;
+  }
+  .sheet-info-cell .sic-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62em;
+    letter-spacing: 0.12em;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .sheet-info-cell .sic-value {
+    font-size: 0.85em;
+    font-weight: 700;
+  }
+  .sheet-cta {
+    display: block;
+    background: var(--ink);
+    color: white;
     text-align: center;
-    padding: 20px 20px 16px;
-    gap: 8px;
+    text-decoration: none;
+    padding: 16px;
+    border-radius: 10px;
+    font-size: 0.9em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    transition: opacity 0.2s;
   }
-  .masthead-left, .masthead-right { text-align: center; }
+  .sheet-cta:hover { opacity: 0.85; }
 
-  .t-tab { min-width: 120px; padding: 14px 16px; gap: 10px; }
-  .t-num { display: none; }
-  .t-avatar { width: 34px; height: 34px; }
-  .t-name { font-size: 0.88em; }
-
-  .page-body { grid-template-columns: 1fr; }
-
-  .tt-col { padding: 24px 16px 40px; border-right: none; }
-  .tt-grid { display: none; }
-  #mobile-cards { display: block; }
-
-  .detail-panel {
-    position: static;
-    height: auto;
-    border-top: 1px solid var(--rule);
-    padding: 28px 16px 40px;
+  /* ── FLOATING ACTION BUTTON ── */
+  .mobile-fab {
+    display: flex;
+    position: fixed;
+    bottom: 24px; right: 20px;
+    z-index: 200;
+    gap: 10px;
+  }
+  .fab-btn {
+    height: 50px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.82em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 20px;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .fab-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,0,0,0.22); }
+  .fab-call {
+    background: var(--ink);
+    color: white;
   }
 
-  .page-footer { flex-direction: column; gap: 6px; text-align: center; padding: 16px; }
+  /* ── MOBILE FOOTER ── */
+  .mobile-footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    padding: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68em;
+    letter-spacing: 0.08em;
+  }
+}
+
+/* Hide mobile-only elements on PC */
+@media (min-width: 861px) {
+  .mobile-header        { display: none !important; }
+  .mobile-teacher-wrap  { display: none !important; }
+  .mobile-section-label { display: none !important; }
+  .mobile-sheet-backdrop{ display: none !important; }
+  .mobile-sheet         { display: none !important; }
+  .mobile-fab           { display: none !important; }
+  .mobile-footer        { display: none !important; }
 }
 </style>
 </head>
 <body>
 
-<!-- ─── MASTHEAD ─── -->
+<!-- ════ MOBILE HEADER ════ -->
+<header class="mobile-header">
+  <div class="mh-brand">KOOKMATH <em>봉선</em></div>
+  <a href="tel:062-413-0909" class="mh-call">📞 문의</a>
+</header>
+
+<!-- ════ PC MASTHEAD ════ -->
 <header class="masthead">
-  <div class="masthead-left">
-    국희재수학전문학원<br>봉선점
-  </div>
+  <div class="masthead-left">국희재수학전문학원<br>봉선점</div>
   <div class="masthead-center">
     <span class="brand">KOOKMATH</span>
     <span class="edition">2026 Spring Semester · Class Schedule</span>
   </div>
-  <div class="masthead-right">
-    광주 남구 봉선2로 49 3층<br>062-413-0909
-  </div>
+  <div class="masthead-right">광주 남구 봉선2로 49 3층<br>062-413-0909</div>
 </header>
 
-<!-- ─── TEACHER TABS ─── -->
+<!-- ════ PC TEACHER STRIP ════ -->
 <nav class="teacher-strip">
   <div class="t-tab active" data-key="kuk" onclick="selectTeacher('kuk', this)">
     <img src="teacher_kook.jpg" class="t-avatar" alt="국희재" onerror="this.style.background='#e2e0d9'">
@@ -539,244 +785,284 @@ body {
   </div>
 </nav>
 
-<!-- ─── BODY ─── -->
-<main class="page-body">
+<!-- ════ MOBILE TEACHER CAROUSEL ════ -->
+<div class="mobile-teacher-wrap">
+  <p class="mtw-label">강사 선택</p>
+  <div class="mobile-teacher-tabs">
+    <div class="mt-pill active" data-key="kuk" onclick="selectTeacher('kuk', null, this)">
+      <img src="teacher_kook.jpg" class="mt-avatar" alt="" onerror="this.style.background='#e2e0d9'">
+      <div>
+        <div class="mt-pill-name">국희재 T</div>
+        <div class="mt-pill-sub">의치대·SKY</div>
+      </div>
+    </div>
+    <div class="mt-pill" data-key="kim" onclick="selectTeacher('kim', null, this)">
+      <img src="teacher_kim.jpg" class="mt-avatar" alt="" onerror="this.style.background='#e2e0d9'">
+      <div>
+        <div class="mt-pill-name">김충현 T</div>
+        <div class="mt-pill-sub">내신 마스터</div>
+      </div>
+    </div>
+    <div class="mt-pill" data-key="baek" onclick="selectTeacher('baek', null, this)">
+      <img src="teacher_baek.jpg" class="mt-avatar" alt="" onerror="this.style.background='#e2e0d9'">
+      <div>
+        <div class="mt-pill-name">백윤성 T</div>
+        <div class="mt-pill-sub">수리논술</div>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <!-- TIMETABLE -->
+<!-- ════ MOBILE SECTION LABEL ════ -->
+<div class="mobile-section-label">
+  <span class="msl-name" id="mob-teacher-name">국희재 T</span>
+  <span class="msl-count" id="mob-class-count">2 CLASSES</span>
+</div>
+
+<!-- ════ PAGE BODY (PC) ════ -->
+<main class="page-body">
   <section class="tt-col">
     <div class="tt-col-header">
       <span class="tt-col-title" id="tt-teacher-name">국희재 T</span>
-      <span class="tt-meta" id="tt-class-count">— 강좌 선택 —</span>
+      <span class="tt-meta" id="tt-class-count">총 2개 강좌</span>
     </div>
-
-    <!-- PC Grid -->
     <div class="tt-grid" id="tt-grid"></div>
-
-    <!-- Mobile List -->
+    <!-- Mobile cards inside tt-col for flow -->
     <div id="mobile-cards"></div>
   </section>
 
-  <!-- DETAIL PANEL -->
   <aside class="detail-panel">
     <div class="panel-eyebrow">강좌 상세</div>
-
     <div class="panel-empty" id="panel-empty">
       <div class="panel-empty-icon">→</div>
       <p class="panel-empty-text">수업 블록을 클릭하면<br>상세 정보를 확인할 수 있어요</p>
     </div>
-
     <div class="panel-content" id="panel-content">
       <div class="panel-category-pill" id="p-pill"></div>
-      <div>
-        <div class="panel-title" id="p-title"></div>
-      </div>
+      <div><div class="panel-title" id="p-title"></div></div>
       <div class="panel-divider"></div>
       <div class="panel-desc" id="p-desc"></div>
       <div class="panel-info-grid" id="p-info"></div>
       <a href="tel:062-413-0909" class="panel-cta">📞 수강 문의하기</a>
     </div>
   </aside>
-
 </main>
 
-<!-- ─── FOOTER ─── -->
+<!-- ════ PC FOOTER ════ -->
 <footer class="page-footer">
   <span>© 2026 국희재수학전문학원 봉선점</span>
   <span>MON – SUN · 09:00 – 22:00</span>
   <span>062-413-0909</span>
 </footer>
 
+<!-- ════ MOBILE BOTTOM SHEET ════ -->
+<div class="mobile-sheet-backdrop" id="sheet-backdrop" onclick="closeSheet()"></div>
+<div class="mobile-sheet" id="mobile-sheet">
+  <div class="sheet-handle-row"><div class="sheet-handle"></div></div>
+  <div class="sheet-inner">
+    <div class="sheet-pill" id="sh-pill"></div>
+    <div class="sheet-title" id="sh-title">—</div>
+    <div class="sheet-divider"></div>
+    <div class="sheet-desc" id="sh-desc"></div>
+    <div class="sheet-info-grid" id="sh-info"></div>
+    <a href="tel:062-413-0909" class="sheet-cta">📞 062-413-0909 &nbsp;·&nbsp; 수강 문의하기</a>
+  </div>
+</div>
+
+<!-- ════ MOBILE FAB ════ -->
+<div class="mobile-fab">
+  <a href="tel:062-413-0909" class="fab-btn fab-call">📞 062-413-0909</a>
+</div>
+
+<!-- ════ MOBILE FOOTER ════ -->
+<footer class="mobile-footer">
+  © 2026 국희재수학전문학원 봉선점 · 광주 남구 봉선2로 49 3층
+</footer>
+
 <script>
 /* ── DATA ── */
-const DAYS = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
-const KOR  = ['월','화','수','목','금','토','일'];
-const HOURS = Array.from({length:15}, (_,i) => i+8); // 8~22
+const DAYS  = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+const HOURS = Array.from({length:15}, (_,i) => i+8);
 
 const teacherMeta = {
-  kuk:  { name: '국희재 T',  label: '의치대·SKY 최상위권' },
-  kim:  { name: '김충현 T',  label: '고등 내신 마스터' },
-  baek: { name: '백윤성 T',  label: '수리논술 전문' },
+  kuk:  { name:'국희재 T',  label:'의치대·SKY 최상위권' },
+  kim:  { name:'김충현 T',  label:'고등 내신 마스터' },
+  baek: { name:'백윤성 T',  label:'수리논술 전문' },
+};
+
+/* stripe & dot color per color class */
+const stripeColor = {
+  'b-med':'#6b5ce7','b-algebra':'#1a6bbf',
+  'b-practice':'#c0392b','b-nonsul':'#8e44ad','b-clinic':'#16a085'
 };
 
 const DATA = {
   kuk: [
     {
-      id:'k1', name:'공통수학1 (의치대반)', days:[6,7], start:9, span:2, color:'b-med',
-      dotColor:'#6b5ce7', badge:'심화 MASTER',
+      id:'k1', name:'공통수학1 (의치대반)', days:[6,7], start:9, span:2,
+      color:'b-med', badge:'심화 MASTER',
       category:'최상위권 전문', categoryColor:'#e8e4ff', categoryText:'#3a2a8a',
-      time:'토·일 09:00–11:00',
+      time:'토·일  09:00 – 11:00',
       desc:'■ 토/일 오전 9시~11시\n■ 최상위 의치대 목표 전용 플래티넘 커리큘럼\n■ 심화 개념 분석 및 실전 문제 대비\n■ 개별 피드백 시스템 운영',
-      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'09:00 – 11:00'},{l:'레벨', v:'최상위 심화'},{l:'정원', v:'소수 정예'}]
+      info:[{l:'요일',v:'토 / 일'},{l:'시간',v:'09:00 – 11:00'},{l:'레벨',v:'최상위 심화'},{l:'정원',v:'소수 정예'}]
     },
     {
-      id:'k2', name:'대수 (중2/중3)', days:[1,3,5], start:19, span:3, color:'b-algebra',
-      dotColor:'#0d3b6e', badge:'심화 MASTER',
+      id:'k2', name:'대수 (중2 / 중3)', days:[1,3,5], start:19, span:3,
+      color:'b-algebra', badge:'심화 MASTER',
       category:'중등 심화', categoryColor:'#d4eaff', categoryText:'#0d3b6e',
-      time:'월·수·금 19:00–22:00',
+      time:'월·수·금  19:00 – 22:00',
       desc:'■ 월/수/금 오후 7시~10시\n■ 3월 4일 대개강\n■ 압도적 깊이의 심화 이론 분석\n■ 수학 최상위권 도달을 목표로 하는 집중 수업',
-      info: [{l:'요일', v:'월·수·금'},{l:'시간', v:'19:00 – 22:00'},{l:'개강', v:'3월 4일'},{l:'정원', v:'소수 정예'}]
+      info:[{l:'요일',v:'월·수·금'},{l:'시간',v:'19:00 – 22:00'},{l:'개강',v:'3월 4일'},{l:'정원',v:'소수 정예'}]
     }
   ],
   kim: [
     {
-      id:'m1', name:'대수 집중반', days:[6,7], start:10, span:3, color:'b-practice',
-      dotColor:'#7a1f2e', badge:null,
+      id:'m1', name:'대수 집중반', days:[6,7], start:10, span:3,
+      color:'b-practice', badge:null,
       category:'내신 집중', categoryColor:'#ffd4da', categoryText:'#7a1f2e',
-      time:'토·일 10:00–13:00',
+      time:'토·일  10:00 – 13:00',
       desc:'■ 토/일 오전 10시~1시\n■ 대수 핵심 개념 완벽 정리 및 기출 훈련\n■ 내신 최고점 달성을 위한 체계적 커리큘럼',
-      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'10:00 – 13:00'},{l:'과목', v:'대수'},{l:'유형', v:'내신 집중'}]
+      info:[{l:'요일',v:'토 / 일'},{l:'시간',v:'10:00 – 13:00'},{l:'과목',v:'대수'},{l:'유형',v:'내신 집중'}]
     },
     {
-      id:'m2', name:'공통수학1 집중반', days:[6,7], start:13, span:3, color:'b-clinic',
-      dotColor:'#0a3d2e', badge:null,
+      id:'m2', name:'공통수학1 집중반', days:[6,7], start:13, span:3,
+      color:'b-clinic', badge:null,
       category:'내신 집중', categoryColor:'#ccf0e4', categoryText:'#0a3d2e',
-      time:'토·일 13:00–16:00',
+      time:'토·일  13:00 – 16:00',
       desc:'■ 토/일 오후 1시~4시\n■ 공통수학1 필수 유형 집중 보강\n■ 실수 방지 트레이닝 및 오답 분석 시스템',
-      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'13:00 – 16:00'},{l:'과목', v:'공통수학1'},{l:'유형', v:'내신 집중'}]
+      info:[{l:'요일',v:'토 / 일'},{l:'시간',v:'13:00 – 16:00'},{l:'과목',v:'공통수학1'},{l:'유형',v:'내신 집중'}]
     }
   ],
   baek: [
     {
-      id:'b1', name:'수리논술 정규반', days:[3], start:19, span:3, color:'b-nonsul',
-      dotColor:'#5b2d8a', badge:'논술 전형',
+      id:'b1', name:'수리논술 정규반', days:[3], start:19, span:3,
+      color:'b-nonsul', badge:'논술 전형',
       category:'수리논술', categoryColor:'#ead4ff', categoryText:'#5b2d8a',
-      time:'수 19:00–22:00',
+      time:'수요일  19:00 – 22:00',
       desc:'■ 수요일 저녁 7시~10시 (수완점)\n■ 주요 대학 기출 분석 및 대면 첨삭 지도\n■ 연세대 의과대학 수리논술 2회 합격 강사의 직접 지도\n■ Google Meet 비대면 1:1 화상 첨삭 병행',
-      info: [{l:'요일', v:'수요일'},{l:'시간', v:'19:00 – 22:00'},{l:'장소', v:'수완점'},{l:'첨삭', v:'1:1 화상'}]
+      info:[{l:'요일',v:'수요일'},{l:'시간',v:'19:00 – 22:00'},{l:'장소',v:'수완점'},{l:'첨삭',v:'1:1 화상'}]
     },
     {
-      id:'b2', name:'기하 / 확통', days:[6,7], start:14, span:2, color:'b-algebra',
-      dotColor:'#0d3b6e', badge:null,
+      id:'b2', name:'기하 / 확통', days:[6,7], start:14, span:2,
+      color:'b-algebra', badge:null,
       category:'선택과목', categoryColor:'#d4eaff', categoryText:'#0d3b6e',
-      time:'토·일 14:00–16:00',
+      time:'토·일  14:00 – 16:00',
       desc:'■ 토/일 오후 2시~4시\n■ 선택과목 전략적 실전 개념 완성\n■ 기하·확률과 통계 병행 운영',
-      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'14:00 – 16:00'},{l:'과목', v:'기하 / 확통'},{l:'유형', v:'실전 개념'}]
+      info:[{l:'요일',v:'토 / 일'},{l:'시간',v:'14:00 – 16:00'},{l:'과목',v:'기하 / 확통'},{l:'유형',v:'실전 개념'}]
     },
     {
-      id:'b3', name:'1:1 소수정예 클리닉', days:[6,7], start:10, span:3, color:'b-clinic',
-      dotColor:'#0a3d2e', badge:'개별 진도',
+      id:'b3', name:'1:1 소수정예 클리닉', days:[6,7], start:10, span:3,
+      color:'b-clinic', badge:'개별 진도',
       category:'클리닉', categoryColor:'#ccf0e4', categoryText:'#0a3d2e',
-      time:'토·일 10:00–13:00',
+      time:'토·일  10:00 – 13:00',
       desc:'■ 오전 10시~1시 / 오후 4시~7시\n■ 개별 맞춤 진도 및 밀착 질의응답\n■ 학생 수준에 완전 맞춤화된 1:1 프로그램',
-      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'10:00–13:00 / 16:00–19:00'},{l:'형태', v:'1:1 개별'},{l:'정원', v:'1인'}]
+      info:[{l:'요일',v:'토 / 일'},{l:'시간',v:'10:00–13:00 / 16:00–19:00'},{l:'형태',v:'1:1 개별'},{l:'정원',v:'1인'}]
     },
     {
-      id:'b4', name:'1:1 소수정예 클리닉', days:[6,7], start:16, span:3, color:'b-clinic',
-      dotColor:'#0a3d2e', badge:'개별 진도',
+      id:'b4', name:'1:1 소수정예 클리닉', days:[6,7], start:16, span:3,
+      color:'b-clinic', badge:'개별 진도',
       category:'클리닉', categoryColor:'#ccf0e4', categoryText:'#0a3d2e',
-      time:'토·일 16:00–19:00',
+      time:'토·일  16:00 – 19:00',
       desc:'■ 오후 4시~7시\n■ 개별 맞춤 진도 및 밀착 질의응답\n■ 학생 수준에 완전 맞춤화된 1:1 프로그램',
-      info: [{l:'요일', v:'토 / 일'},{l:'시간', v:'16:00 – 19:00'},{l:'형태', v:'1:1 개별'},{l:'정원', v:'1인'}]
+      info:[{l:'요일',v:'토 / 일'},{l:'시간',v:'16:00 – 19:00'},{l:'형태',v:'1:1 개별'},{l:'정원',v:'1인'}]
     }
   ]
 };
 
-/* ── STATE ── */
-let currentTeacher = 'kuk';
-let activeBlock = null;
-
-/* ── HELPERS ── */
-function hourToRow(h) { return h - 8; } // 0-indexed from 8:00
-
-/* ── BUILD GRID ── */
+/* ── BUILD PC GRID ── */
 function buildGrid(key) {
   const grid = document.getElementById('tt-grid');
   grid.innerHTML = '';
 
-  // Header row
-  grid.appendChild(makeEl('div', 'tt-grid-header', ''));
-  DAYS.forEach(d => {
-    const h = makeEl('div', 'tt-grid-header', d);
-    grid.appendChild(h);
-  });
+  const makeEl = (tag, cls, text='') => {
+    const el = document.createElement(tag);
+    el.className = cls;
+    if(text) el.textContent = text;
+    return el;
+  };
 
-  // Body: 15 hours × 8 cols
-  const cells = []; // cells[row][col] => dom el
+  grid.appendChild(makeEl('div','tt-grid-header',''));
+  DAYS.forEach(d => grid.appendChild(makeEl('div','tt-grid-header',d)));
+
+  const cells = [];
   for(let r=0; r<15; r++){
     const row = [];
-    // time label
-    const tl = makeEl('div','tt-time-label', HOURS[r]+':00');
-    grid.appendChild(tl);
+    grid.appendChild(makeEl('div','tt-time-label', HOURS[r]+':00'));
     for(let c=0; c<7; c++){
       const cell = makeEl('div','tt-cell','');
-      cell.dataset.row = r;
-      cell.dataset.col = c;
       grid.appendChild(cell);
       row.push(cell);
     }
     cells.push(row);
   }
 
-  // Place blocks
-  const classes = DATA[key];
-  // Track which (col, row) are occupied for stacking
-  const occupied = {};
-
-  classes.forEach(cls => {
+  DATA[key].forEach(cls => {
     cls.days.forEach(d => {
-      const colIdx = d-1; // 0-indexed
-      const rowIdx = hourToRow(cls.start);
-      const anchor = cells[rowIdx][colIdx];
+      const anchor = cells[cls.start-8]?.[d-1];
       if(!anchor) return;
-
       const block = document.createElement('div');
       block.className = 'tt-block ' + cls.color;
-      block.dataset.id = cls.id;
-
-      // Height: span rows * cell-height
-      const cellH = 52;
-      block.style.height = (cls.span * cellH - 6) + 'px';
+      block.style.height = (cls.span*52-6)+'px';
       block.style.top = '3px';
-
-      let inner = '';
-      if(cls.badge) inner += `<span class="badge-hot">${cls.badge}</span>`;
-      inner += `<span class="b-title">${cls.name}</span>`;
-      inner += `<span class="b-time">${cls.start}:00–${cls.start+cls.span}:00</span>`;
-      block.innerHTML = inner;
-
-      block.addEventListener('click', () => showDetail(cls, block));
+      let html = '';
+      if(cls.badge) html += `<span class="badge-hot">${cls.badge}</span>`;
+      html += `<span class="b-title">${cls.name}</span>`;
+      html += `<span class="b-time">${cls.start}:00–${cls.start+cls.span}:00</span>`;
+      block.innerHTML = html;
+      block.addEventListener('click', () => showDetailPC(cls, block));
       anchor.appendChild(block);
     });
   });
 }
 
-/* ── BUILD MOBILE ── */
-function buildMobile(key) {
+/* ── BUILD MOBILE CARDS ── */
+function buildMobileCards(key) {
   const container = document.getElementById('mobile-cards');
   container.innerHTML = '';
-  const classes = DATA[key];
-  // Deduplicate by id
   const seen = new Set();
-  classes.forEach(cls => {
+  DATA[key].forEach(cls => {
     if(seen.has(cls.id)) return;
     seen.add(cls.id);
 
     const card = document.createElement('div');
     card.className = 'm-card';
+    card.dataset.id = cls.id;
+
+    const sc = stripeColor[cls.color] || '#888';
+    const badgeBg = sc + '22';
+
+    let timeChips = cls.time.split('  ');
+
     card.innerHTML = `
-      <div class="m-dot" style="background:${cls.dotColor}; margin-top:6px;"></div>
-      <div>
-        <div class="m-title">${cls.name}${cls.badge ? ` <span class="badge-hot" style="vertical-align:middle">${cls.badge}</span>` : ''}</div>
-        <div class="m-meta">${cls.time}</div>
+      <div class="m-card-stripe" style="background:${sc}"></div>
+      <div class="m-card-body">
+        <div class="m-card-left">
+          <div class="m-badge-row">
+            <span class="m-category-tag">${cls.category}</span>
+            ${cls.badge ? `<span class="m-badge-pill" style="background:${badgeBg};color:${sc}">${cls.badge}</span>` : ''}
+          </div>
+          <div class="m-title">${cls.name}</div>
+          <div class="m-time-row">
+            ${timeChips.map(t => `<span class="m-time-chip">${t.trim()}</span>`).join('')}
+          </div>
+        </div>
+        <div class="m-card-arrow">›</div>
       </div>
     `;
-    card.addEventListener('click', () => showDetail(cls, null));
+    card.addEventListener('click', () => showDetailMobile(cls, card));
     container.appendChild(card);
   });
 }
 
-/* ── SHOW DETAIL ── */
-function showDetail(cls, blockEl) {
-  // Clear previous active
+/* ── PC DETAIL ── */
+function showDetailPC(cls, blockEl) {
   document.querySelectorAll('.tt-block.active-block').forEach(b => b.classList.remove('active-block'));
   if(blockEl) blockEl.classList.add('active-block');
-  activeBlock = blockEl;
 
   document.getElementById('panel-empty').style.display = 'none';
   const content = document.getElementById('panel-content');
   content.classList.add('show');
 
-  // Pill
   const pill = document.getElementById('p-pill');
   pill.textContent = cls.category;
   pill.style.background = cls.categoryColor;
@@ -784,56 +1070,96 @@ function showDetail(cls, blockEl) {
 
   document.getElementById('p-title').textContent = cls.name;
   document.getElementById('p-desc').textContent = cls.desc;
+  document.getElementById('p-info').innerHTML = cls.info.map(({l,v}) =>
+    `<div class="panel-info-cell"><div class="ic-label">${l}</div><div class="ic-value">${v}</div></div>`
+  ).join('');
+}
 
-  // Info grid
-  const grid = document.getElementById('p-info');
-  grid.innerHTML = cls.info.map(({l,v}) => `
-    <div class="panel-info-cell">
-      <div class="ic-label">${l}</div>
-      <div class="ic-value">${v}</div>
-    </div>
-  `).join('');
+/* ── MOBILE BOTTOM SHEET ── */
+function showDetailMobile(cls, cardEl) {
+  document.querySelectorAll('.m-card.active').forEach(c => c.classList.remove('active'));
+  if(cardEl) cardEl.classList.add('active');
 
-  // Scroll to panel on mobile
-  if(window.innerWidth <= 860) {
-    document.querySelector('.detail-panel').scrollIntoView({behavior:'smooth', block:'start'});
-  }
+  const sc = stripeColor[cls.color] || '#888';
+
+  const pill = document.getElementById('sh-pill');
+  pill.textContent = cls.category;
+  pill.style.background = cls.categoryColor;
+  pill.style.color = cls.categoryText;
+
+  document.getElementById('sh-title').textContent = cls.name;
+  document.getElementById('sh-desc').textContent = cls.desc;
+  document.getElementById('sh-info').innerHTML = cls.info.map(({l,v}) =>
+    `<div class="sheet-info-cell"><div class="sic-label">${l}</div><div class="sic-value">${v}</div></div>`
+  ).join('');
+
+  document.getElementById('mobile-sheet').classList.add('open');
+  document.getElementById('sheet-backdrop').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSheet() {
+  document.getElementById('mobile-sheet').classList.remove('open');
+  document.getElementById('sheet-backdrop').classList.remove('open');
+  document.body.style.overflow = '';
+  document.querySelectorAll('.m-card.active').forEach(c => c.classList.remove('active'));
 }
 
 /* ── SELECT TEACHER ── */
-function selectTeacher(key, el) {
-  currentTeacher = key;
+function selectTeacher(key, pcTabEl, mobileTabEl) {
+  /* PC tab */
+  if(pcTabEl) {
+    document.querySelectorAll('.t-tab').forEach(t => t.classList.remove('active'));
+    pcTabEl.classList.add('active');
+  } else {
+    document.querySelectorAll('.t-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.key === key);
+    });
+  }
+  /* Mobile pill */
+  if(mobileTabEl) {
+    document.querySelectorAll('.mt-pill').forEach(p => p.classList.remove('active'));
+    mobileTabEl.classList.add('active');
+  } else {
+    document.querySelectorAll('.mt-pill').forEach(p => {
+      p.classList.toggle('active', p.dataset.key === key);
+    });
+  }
 
-  // Tab UI
-  document.querySelectorAll('.t-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-
-  // Name + count
   const meta = teacherMeta[key];
-  document.getElementById('tt-teacher-name').textContent = meta.name;
   const cnt = [...new Set(DATA[key].map(c=>c.id))].length;
+
+  document.getElementById('tt-teacher-name').textContent = meta.name;
   document.getElementById('tt-class-count').textContent = `총 ${cnt}개 강좌`;
+  document.getElementById('mob-teacher-name').textContent = meta.name;
+  document.getElementById('mob-class-count').textContent = cnt + ' CLASSES';
 
-  // Rebuild
   buildGrid(key);
-  buildMobile(key);
+  buildMobileCards(key);
 
-  // Reset detail panel
+  /* Reset PC detail */
   document.getElementById('panel-empty').style.display = 'flex';
   document.getElementById('panel-content').classList.remove('show');
+  document.querySelectorAll('.tt-block.active-block').forEach(b=>b.classList.remove('active-block'));
+
+  closeSheet();
 }
 
-/* ── UTIL ── */
-function makeEl(tag, cls, text) {
-  const el = document.createElement(tag);
-  el.className = cls;
-  el.textContent = text;
-  return el;
-}
+/* ── SWIPE TO CLOSE SHEET ── */
+let touchStartY = 0;
+document.getElementById('mobile-sheet').addEventListener('touchstart', e => {
+  touchStartY = e.touches[0].clientY;
+}, {passive:true});
+document.getElementById('mobile-sheet').addEventListener('touchend', e => {
+  if(e.changedTouches[0].clientY - touchStartY > 60) closeSheet();
+}, {passive:true});
 
 /* ── INIT ── */
 document.addEventListener('DOMContentLoaded', () => {
-  selectTeacher('kuk', document.querySelector('.t-tab[data-key="kuk"]'));
+  selectTeacher('kuk',
+    document.querySelector('.t-tab[data-key="kuk"]'),
+    document.querySelector('.mt-pill[data-key="kuk"]')
+  );
 });
 </script>
 </body>
